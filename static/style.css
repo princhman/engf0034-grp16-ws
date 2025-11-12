@@ -1,0 +1,87 @@
+.small-container {
+    position: absolute;
+    width: 383px;
+    height: 91px;
+    left: 642px;
+    top: 913px;
+
+    background: #98b8d7;
+    border-radius: 20px;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    /*left: -3px;
+    top: -121px;*/
+
+    background: #98b8d7;
+    border-radius: 0.001%;
+}
+/* Text */
+#text {
+    position: absolute;
+    width: 285px;
+    height: 125px;
+    left: 26px;
+    top: 493px;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 64px;
+    color: #000000;
+}
+/* explanation of the stirring page - capabilities and what the graph shows */
+h2 {
+    position: absolute;
+    width: 351px;
+    height: 302px;
+    left: 169px;
+    top: 588px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 43px;
+    text-align: center;
+    color: #000000;
+}
+
+/* WELCOME TO OUR BIOREACTOR CONTROL PAGE! */
+
+#title {
+    position: absolute;
+    width: 1269px;
+    height: 175px;
+    left: 229px;
+    top: 44px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 96px;
+    line-height: 128px;
+    text-align: center;
+
+    color: #ffffff;
+}
+
+#button-text {
+    position: absolute;
+    width: 413px;
+    height: 142px;
+    left: 1119px;
+    top: 920px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 64px;
+    text-align: center;
+
+    color: #000000;
+}
