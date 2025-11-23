@@ -12,6 +12,18 @@ def initial():
 def welcome():
     return render_template("welcome.html")
 
+@app.route("/stirring")
+def stirring():
+    return render_template("stirring.html")
+
+@app.route("/temperature")
+def temperature():
+    return render_template("temperature.html")
+
+@app.route("/ph")
+def ph():
+    return render_template("ph.html")
+
 
 if __name__ == "__main__":
     app.run()

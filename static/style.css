@@ -35,22 +35,39 @@
     line-height: 64px;
     color: #000000;
 }*/
-/* explanation of the stirring page - capabilities and what the graph shows 
-h2 {
+ /*explanation of the stirring page - capabilities and what the graph shows*/
+.stirring {
     position: absolute;
-    width: 351px;
-    height: 302px;
-    left: 169px;
-    top: 588px;
+    width: 100px;
+    left: 100px;
+    top: 300px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 32px;
-    line-height: 43px;
+    font-size: 16px;
+    line-height: 20px;
     text-align: center;
     color: #000000;
-}*/
+}
+
+.stirring_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 50px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+
+    color: hsl(0, 0%, 0%);
+}
 
 /* WELCOME TO OUR BIOREACTOR CONTROL PAGE! */
 
