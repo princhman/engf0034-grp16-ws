@@ -1,0 +1,48 @@
+
+.container {
+    position: absolute;
+    width: 99%;
+    height:20%;
+
+    background: #98b8d7;
+    border-radius: 0.5%;
+}
+
+#title {
+    position: absolute;
+    left: 10;
+    top: 0;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 1;
+
+    color: #ffffff;
+}
+
+input[type=submit] {
+    background-color: #438D8F;
+    width: 200px;
+    height: 50px;
+    padding: 10px;
+    margin: 0px;
+    border: none;
+    font-family: "Fugaz One", sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    color: white;
+    cursor: pointer;
+}
+
+.form1 {
+    position: absolute;
+    color: black;
+    left:750px;
+    top:200px;
+    z-index: 1;
+    font-family: "Fugaz One", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}

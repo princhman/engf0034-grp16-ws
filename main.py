@@ -1,9 +1,9 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from datetime import timedelta, datetime
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-from sqlalchemy.sql import text
-import sqlite3
+#from flask_sqlalchemy import SQLAlchemy
+#from sqlalchemy import func
+#from sqlalchemy.sql import text
+#import sqlite3
 
 
 app = Flask(__name__)
@@ -16,14 +16,16 @@ app.permanent_session_lifetime = timedelta(days=7)
 def initial():
     return redirect(url_for("welcome"))
 
-
 @app.route("/welcome")
 def welcome():
     return render_template("welcome.html")
 
 @app.route("/stirring")
 def stirring():
-    return render_template("stirring.html")
+    if request.method == "POST": #post command occurs when user submits the form
+        stirring_speed = request.form["stirring_speed"]
+    else:
+        return render_template("stirring.html")
 
 @app.route("/temperature")
 def temperature():
