@@ -1,4 +1,4 @@
-.small-container {
+/*.small-container {
     position: absolute;
     width: 383px;
     height: 91px;
@@ -7,19 +7,21 @@
 
     background: #98b8d7;
     border-radius: 20px;
-}
+}*/
 
 .container {
     position: absolute;
-    width: 100%;
-    height: 80%;
-    /*left: -3px;
+    width: 99%;
+    height:40%;
+    /*padding-top: 56.25%;
+    left: -3px;
     top: -121px;*/
 
     background: #98b8d7;
-    border-radius: 0.001%;
+    border-radius: 0.5%;
 }
-/* Text */
+
+/* Text 
 #text {
     position: absolute;
     width: 285px;
@@ -32,44 +34,134 @@
     font-size: 48px;
     line-height: 64px;
     color: #000000;
-}
-/* explanation of the stirring page - capabilities and what the graph shows */
-h2 {
+}*/
+ /*explanation of the stirring page - capabilities and what the graph shows*/
+.stirring {
     position: absolute;
-    width: 351px;
-    height: 302px;
-    left: 169px;
-    top: 588px;
+    width: 150px;
+    left: 20vw;
+    top: 250px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 32px;
-    line-height: 43px;
+    font-size: 20px;
+    line-height: 20px;
     text-align: center;
     color: #000000;
+}
+
+.stirring_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 200px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 2%;
+
+
+    color: hsl(0, 0%, 0%);
+}
+
+ /*explanation of the stirring page - capabilities and what the graph shows*/
+.temperature {
+    position: absolute;
+    width: 150px;
+    left: 45vw;
+    top: 250px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.temperature_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 200px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 2%;
+
+
+    color: hsl(0, 0%, 0%);
+}
+
+.ph {
+    position: absolute;
+    width: 150px;
+    left: 70vw;
+    top: 250px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.ph_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 200px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 2%;
+
+
+    color: hsl(0, 0%, 0%);
 }
 
 /* WELCOME TO OUR BIOREACTOR CONTROL PAGE! */
 
 #title {
     position: absolute;
-    width: 1269px;
-    height: 175px;
-    left: 229px;
-    top: 44px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 96px;
-    line-height: 128px;
+    font-size: 65px;
+    line-height: 1;
     text-align: center;
 
     color: #ffffff;
 }
 
-#button-text {
+/*#button-text {
     position: absolute;
     width: 413px;
     height: 142px;
@@ -84,4 +176,4 @@ h2 {
     text-align: center;
 
     color: #000000;
-}
+}*/
