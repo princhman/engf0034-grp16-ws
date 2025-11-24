@@ -1,7 +1,16 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for
+from datetime import timedelta, datetime
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
+from sqlalchemy.sql import text
+import sqlite3
+
 
 app = Flask(__name__)
-
+app.secret_key = "thisismysecretkey"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.permanent_session_lifetime = timedelta(days=7)
 
 @app.route("/")
 def initial():

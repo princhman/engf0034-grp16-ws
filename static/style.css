@@ -12,7 +12,7 @@
 .container {
     position: absolute;
     width: 99%;
-    height:50%;
+    height:40%;
     /*padding-top: 56.25%;
     left: -3px;
     top: -121px;*/
@@ -38,14 +38,14 @@
  /*explanation of the stirring page - capabilities and what the graph shows*/
 .stirring {
     position: absolute;
-    width: 100px;
-    left: 100px;
-    top: 300px;
+    width: 150px;
+    left: 20vw;
+    top: 250px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 20px;
     text-align: center;
     color: #000000;
@@ -56,15 +56,88 @@
     width: 200px;
     height: 50px;
     left: 0px;
-    top: 50px;
+    top: 200px;
 
     background: #98b8d7;
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 25px;
     line-height: 30px;
     text-align: center;
+    border-radius: 2%;
+
+
+    color: hsl(0, 0%, 0%);
+}
+
+ /*explanation of the stirring page - capabilities and what the graph shows*/
+.temperature {
+    position: absolute;
+    width: 150px;
+    left: 45vw;
+    top: 250px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.temperature_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 200px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 2%;
+
+
+    color: hsl(0, 0%, 0%);
+}
+
+.ph {
+    position: absolute;
+    width: 150px;
+    left: 70vw;
+    top: 250px;
+
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.ph_button{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 0px;
+    top: 200px;
+
+    background: #98b8d7;
+    font-family: "Playfair Display";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 2%;
+
 
     color: hsl(0, 0%, 0%);
 }
