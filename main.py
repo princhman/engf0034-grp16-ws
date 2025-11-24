@@ -8,7 +8,7 @@ from sqlalchemy import func
 from sqlalchemy.sql import text
 
 from graphs import *
-from mqtt import on_message
+from mqtt import init_accumulator, on_message
 
 app = Flask(__name__)
 app.secret_key = "thisismysecretkey"
@@ -133,5 +133,15 @@ def ph():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        # Initialize the accumulator with database and models
+        init_accumulator(
+            db,
+            {
+                "PH": PH,
+                "Temperature": Temperature,
+                "Stirring": Stirring,
+                "datetime": datetime,
+            },
+        )
     client.loop_start()
     app.run()
