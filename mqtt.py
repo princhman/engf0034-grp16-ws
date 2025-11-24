@@ -3,3 +3,7 @@ def on_message(client, userdata, msg):
     # queue -> add it to correct record
     # agregate the data to keep per minute, here?
     pass
+
+def on_set(device_name, value):
+    # device: stirring / ph / temp 
+    pass
