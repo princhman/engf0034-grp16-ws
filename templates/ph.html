@@ -7,8 +7,18 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='ph.css')}}"
         />
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
     <body>
+        <style>
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+            a:hover {
+                color: #333;
+            }
+        </style>
         <div class="container">
             <h1 id="title">PH</h1>
             <h2 id = "welcome_link"><a href="{{ url_for('welcome')}}">welcome</a></h2>
@@ -24,5 +34,13 @@
             <p><input type="submit" value="submit"></h2>
         </form>
     </div>
+
+    <div id="graph" style="width: 80%; height: 80%"></div>
+    
+    <script type="text/javascript">
+        var graphs = {{ graphJSON | safe }};
+        Plotly.newPlot('graph',graphs.data,graphs.layout);        
+    </script>
+
     </body>
 </html>

@@ -5,5 +5,5 @@ def on_message(client, userdata, msg):
     pass
 
 def on_set(device_name, value):
-    # device: stirring / ph / temp 
+    # device: stirring / ph / temperature
     pass
