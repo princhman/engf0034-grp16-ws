@@ -169,5 +169,15 @@ def generate_lists(graph_type):
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        # Initialize the accumulator with database and models
+        init_accumulator(
+            db,
+            {
+                "PH": PH,
+                "Temperature": Temperature,
+                "Stirring": Stirring,
+                "datetime": datetime,
+            },
+        )
     client.loop_start()
     app.run()
