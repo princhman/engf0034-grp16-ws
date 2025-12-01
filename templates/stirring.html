@@ -9,6 +9,15 @@
         />
     </head>
     <body>
+        <style>
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+            a:hover {
+                color: #333;
+            }
+        </style>
         <div class="container">
             <h1 id="title">STIRRING</h1>
             <h2 id = "welcome_link"><a href="{{ url_for('welcome')}}">welcome</a></h2>
@@ -25,5 +34,23 @@
             <p><input type="submit" value="submit"></h2>
         </form>
     </div>
+
+    <div id="messages">
+        {% with messages = get_flashed_messages() %}
+        {%if messages%}
+            {% for m in messages %}
+                <p>alert&nbsp;:&nbsp;{{m}}</p>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div id="graph" style="width: 100%; height: 500px;"></div>
+    
+    <script type="text/javascript">
+        var graphs = {{ graphJSON | safe }};
+        Plotly.plot('graph',graphs,{});        
+    </script>
+
     </body>
 </html>

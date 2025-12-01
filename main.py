@@ -8,7 +8,7 @@ from sqlalchemy import func
 from sqlalchemy.sql import text
 
 from graphs import *
-from mqtt import init_accumulator, on_message
+from mqtt import *
 
 app = Flask(__name__)
 app.secret_key = "thisismysecretkey"
@@ -96,39 +96,75 @@ def stirring():
     if request.method == "POST":
         stirring_speed = request.form["stirring_speed"]
         current_datetime = datetime.now()
-        # add_stirring_speed = Stirring(stirring_speed, current_datetime)
-        # db.session.add(add_stirring_speed)
-        # db.session.commit()
+        on_set("stirring", stirring_speed)
+
         return redirect(url_for("stirring"))
     else:
-        return render_template("stirring.html")
+        date_value_list = generate_lists("stirring")
+        graphJSON = stirring_graph(date_value_list)
+        return render_template("stirring.html", graphJSON=graphJSON)
 
 
-@app.route("/temperature")
+@app.route("/temperature", methods=["GET", "POST"])
 def temperature():
     if request.method == "POST":
         temperature_level = request.form["temperature_level"]
         current_datetime = datetime.now()
+        try:
+            ph_level = int(ph_level)
+        except:
+            flash("please input an integer for temperature level")
+            return redirect(url_for("ph"))
+        flash("temperature level successfully submitted")
+        on_set("temperature", temperature_level)
         # add_temperature_level = Temperature(temperature_level, current_datetime)
         # db.session.add(add_temperature_level)
         # db.session.commit()
         return redirect(url_for("temperature"))
     else:
-        return render_template("temperature.html")
+        date_value_list = generate_lists("temperature")
+        graphJSON = temperature_graph(date_value_list)
+        return render_template("temperature.html", graphJSON=graphJSON)
 
 
-@app.route("/ph")
+@app.route("/ph", methods=["GET", "POST"])
 def ph():
     if request.method == "POST":
         ph_level = request.form["ph_level"]
         current_datetime = datetime.now()
-        # add_ph_level = PH(ph_level, current_datetime)
-        # db.session.add(add_ph_level)
-        # db.session.commit()
+        try:
+            ph_level = int(ph_level)
+        except:
+            flash("please input an integer for ph level")
+            return redirect(url_for("ph"))
+        on_set("ph", ph_level)
+        flash("ph level successfully submitted")
+        add_ph_level = PH(ph_level, current_datetime)
+        db.session.add(add_ph_level)
+        db.session.commit()
         return redirect(url_for("ph"))
     else:
-        return render_template("ph.html")
+        date_value_list = generate_lists("ph")
+        graphJSON = ph_graph(date_value_list)
+        return render_template("ph.html", graphJSON=graphJSON)
 
+def generate_lists(graph_type):
+    date_value_list = []
+    if graph_type == "stirring":
+        query = Stirring.query.limit(100).all()
+        value_attr = "stirring_speed"
+    elif graph_type == "temperature":
+        query = Temperature.query.limit(100).all()
+        value_attr = "temperature_level"
+    elif graph_type == "ph":
+        query = PH.query.limit(100).all()
+        value_attr = "ph_level"
+    for row in query:
+        value = getattr(row, value_attr)
+        date_time = row.timestamp
+        format_date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
+        date_value_list.append([format_date_time,value])
+    return date_value_list
 
 if __name__ == "__main__":
     with app.app_context():
