@@ -38,14 +38,14 @@
  /*explanation of the stirring page - capabilities and what the graph shows*/
 .stirring {
     position: absolute;
-    width: 150px;
-    left: 20vw;
-    top: 250px;
+    width: 250px;
+    left: 10vw;
+    top: 230px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 20px;
     text-align: center;
     color: #000000;
@@ -55,8 +55,8 @@
     position: absolute;
     width: 200px;
     height: 50px;
-    left: 0px;
-    top: 200px;
+    left: 5vw;
+    top: 230px;
 
     background: #98b8d7;
     font-family: "Playfair Display";
@@ -74,14 +74,14 @@
  /*explanation of the stirring page - capabilities and what the graph shows*/
 .temperature {
     position: absolute;
-    width: 150px;
-    left: 45vw;
-    top: 250px;
+    width: 250px;
+    left: 35vw;
+    top: 230px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 20px;
     text-align: center;
     color: #000000;
@@ -91,8 +91,8 @@
     position: absolute;
     width: 200px;
     height: 50px;
-    left: 0px;
-    top: 200px;
+    left: 5vw;
+    top: 230px;
 
     background: #98b8d7;
     font-family: "Playfair Display";
@@ -109,14 +109,14 @@
 
 .ph {
     position: absolute;
-    width: 150px;
-    left: 70vw;
-    top: 250px;
+    width: 250px;
+    left: 60vw;
+    top: 230px;
 
     font-family: "Playfair Display";
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 20px;
     text-align: center;
     color: #000000;
@@ -126,8 +126,8 @@
     position: absolute;
     width: 200px;
     height: 50px;
-    left: 0px;
-    top: 200px;
+    left: 5vw;
+    top: 230px;
 
     background: #98b8d7;
     font-family: "Playfair Display";
