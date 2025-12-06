@@ -7,6 +7,7 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='temperature.css')}}"
         />
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
     <body>
         <style>
@@ -29,10 +30,18 @@
         <div class = "form1">
         <form action="#" method="post">
             <p>Temperature:</p>
-            <p><input type="text" name="temperature" placeholder="Enter Temperature"/></p>
+            <p><input type="text" name="temperature_level" placeholder="Enter Temperature"/></p>
             <p><input type="submit" value="submit"></h2>
         </form>
-    </div>
+        <!--<form method="POST" action="#">
+            <p>Time Frame:
+            <select name="time_frame">
+                <option>last minute</option>
+                <option>last hour</option>
+                <option>last day</option>
+            </select> <input type="submit" value="change!" name="ChangeTimeFrame"/></p>
+        </form>-->
+        </div>
 
     <div id="graph" style="width: 80%; height: 80%"></div>
 

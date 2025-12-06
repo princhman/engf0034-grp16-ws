@@ -7,6 +7,7 @@
             rel="stylesheet"
             href="{{ url_for('static', filename='stirring.css')}}"
         />
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
     <body>
         <style>
@@ -31,9 +32,17 @@
         <form action="#" method="post">
             <p>Stirring Speed:</p>
             <p><input type="text" name="stirring_speed" placeholder="Enter Stirring Speed"/></p>
-            <p><input type="submit" value="submit"></h2>
+            <p><input type="submit" value="submit" name="EditParameter"></h2>
         </form>
-    </div>
+        <form method="POST" action="#">
+            <!--<p>Time Frame:
+            <select name="time_frame">
+                <option>last minute</option>
+                <option>last hour</option>
+                <option>last day</option>
+            </select> <input type="submit" value="change!" name="ChangeTimeFrame"/></p>
+        </form>-->
+        </div>
 
     <div id="messages">
         {% with messages = get_flashed_messages() %}
@@ -45,11 +54,11 @@
         {% endwith %}
     </div>
 
-    <div id="graph" style="width: 100%; height: 500px;"></div>
+    <div id="graph" style="width: 80%; height: 80%"></div>
     
     <script type="text/javascript">
         var graphs = {{ graphJSON | safe }};
-        Plotly.plot('graph',graphs,{});        
+        Plotly.newPlot('graph',graphs.data,graphs.layout);        
     </script>
 
     </body>

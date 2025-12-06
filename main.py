@@ -100,30 +100,57 @@ def stirring():
 
         return redirect(url_for("stirring"))
     else:
-        date_value_list = generate_lists("stirring")
+        now = datetime.now()
+        time_list = []
+        for time in range(7):
+            time_calculated = (now - timedelta(seconds=time*10))
+            time_list.append(time_calculated)
+
+        data_points = []
+        for value in range(6):
+            time_mean = (Stirring.query.with_entities(func.avg(Stirring.stirring_speed)).filter(Stirring.timestamp <= time_list[value]).filter(Stirring.timestamp > time_list[value + 1]).scalar())
+            data_points.append(time_mean)
+
+        date_value_list = generate_lists(time_list, data_points)
         graphJSON = stirring_graph(date_value_list)
+        refresh_graphs()
         return render_template("stirring.html", graphJSON=graphJSON)
 
 
 @app.route("/temperature", methods=["GET", "POST"])
 def temperature():
     if request.method == "POST":
-        temperature_level = request.form["temperature_level"]
-        current_datetime = datetime.now()
-        try:
-            ph_level = int(ph_level)
-        except:
-            flash("please input an integer for temperature level")
-            return redirect(url_for("ph"))
-        flash("temperature level successfully submitted")
-        on_set("temperature", temperature_level)
+        if "ChangeTimeFrame" in request.form:
+            time_frame = request.form["time_frame"]
+        elif "EditParameter" in request.form:
+            temperature_level = request.form["temperature_level"]
+            current_datetime = datetime.now()
+            try:
+                temperature_level = int(temperature_level)
+            except:
+                #flash("please input an integer for temperature level")
+                return redirect(url_for("temperature"))
+            #flash("temperature level successfully submitted")
+            on_set("temperature", temperature_level)
         # add_temperature_level = Temperature(temperature_level, current_datetime)
         # db.session.add(add_temperature_level)
         # db.session.commit()
         return redirect(url_for("temperature"))
     else:
-        date_value_list = generate_lists("temperature")
+        now = datetime.now()
+        time_list = []
+        for time in range(7):
+            time_calculated = (now - timedelta(seconds=time*10))
+            time_list.append(time_calculated)
+
+        data_points = []
+        for value in range(6):
+            time_mean = (Temperature.query.with_entities(func.avg(Temperature.temperature_level)).filter(Temperature.timestamp <= time_list[value]).filter(Temperature.timestamp > time_list[value + 1]).scalar())
+            data_points.append(time_mean)
+
+        date_value_list = generate_lists(time_list, data_points)
         graphJSON = temperature_graph(date_value_list)
+        refresh_graphs()
         return render_template("temperature.html", graphJSON=graphJSON)
 
 
@@ -135,22 +162,31 @@ def ph():
         try:
             ph_level = int(ph_level)
         except:
-            flash("please input an integer for ph level")
+            #flash("please input an integer for ph level")
             return redirect(url_for("ph"))
         on_set("ph", ph_level)
-        flash("ph level successfully submitted")
-        add_ph_level = PH(ph_level, current_datetime)
-        db.session.add(add_ph_level)
-        db.session.commit()
+        #flash("ph level successfully submitted")
         return redirect(url_for("ph"))
     else:
-        date_value_list = generate_lists("ph")
+        now = datetime.now()
+        time_list = []
+        for time in range(7):
+            time_calculated = (now - timedelta(seconds=time*10))
+            time_list.append(time_calculated)
+
+        data_points = []
+        for value in range(6):
+            time_mean = (PH.query.with_entities(func.avg(PH.ph_level)).filter(PH.timestamp <= time_list[value]).filter(PH.timestamp > time_list[value + 1]).scalar())
+            data_points.append(float(time_mean) if time_mean is not None else None)
+
+        date_value_list = generate_lists(time_list, data_points)
         graphJSON = ph_graph(date_value_list)
+        refresh_graphs()
         return render_template("ph.html", graphJSON=graphJSON)
 
-def generate_lists(graph_type):
+def generate_lists(time_list, data_points):
     date_value_list = []
-    if graph_type == "stirring":
+    '''if graph_type == "stirring":
         query = Stirring.query.limit(100).all()
         value_attr = "stirring_speed"
     elif graph_type == "temperature":
@@ -158,13 +194,45 @@ def generate_lists(graph_type):
         value_attr = "temperature_level"
     elif graph_type == "ph":
         query = PH.query.limit(100).all()
-        value_attr = "ph_level"
-    for row in query:
-        value = getattr(row, value_attr)
-        date_time = row.timestamp
-        format_date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
-        date_value_list.append([format_date_time,value])
+        value_attr = "ph_level"'''
+    for x in range (6):
+        format_date_time = time_list[x].strftime("%Y-%m-%d %H:%M:%S")
+        date_value_list.append([format_date_time, data_points[x]])
+    print(date_value_list)
     return date_value_list
+
+def refresh_graphs():
+    now = datetime.now()
+    one_day_ago = (now - timedelta(days=1))
+    ph_query = PH.query.filter(PH.timestamp<=one_day_ago)
+    for query in ph_query:
+        db.session.delete(query)
+        db.session.commit()
+
+
+    # delete everything 24 hours ago
+
+    #if ph
+    
+
+    # last minute
+    # calculate mean of data within 10 secs
+    # for all data within 10 secs - add up and divide by count
+    # add data to graph
+
+    # last hour
+    # calculate mean of data within 10 minutes
+    # for all data within 10 minutes - add up and divide by count
+    # add data to graph
+
+    # last day
+    # calculate mean of data within 10 minutes
+    # for all data within 10 minutes - add up and divide by count
+    # add data to graph
+
+
+    # display graph based on time frame
+
 
 if __name__ == "__main__":
     with app.app_context():
