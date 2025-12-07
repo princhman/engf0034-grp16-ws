@@ -16,7 +16,18 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(days=7)
 
+
+def on_connect(client, userdata, flags, rc, properties=None):
+    print(f"Connected to MQTT broker with result code {rc}")
+    # Subscribe to data topics when connected
+    client.subscribe("2025-engf0002/data/ph")
+    client.subscribe("2025-engf0002/data/stirring")
+    client.subscribe("2025-engf0002/data/temp")
+    print("Subscribed to data topics")
+
+
 client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+client.on_connect = on_connect
 client.on_message = on_message
 client.connect("broker.hivemq.com", 1883, 60)
 
@@ -95,20 +106,29 @@ def welcome():
 def stirring():
     if request.method == "POST":
         stirring_speed = request.form["stirring_speed"]
-        current_datetime = datetime.now()
-        on_set("stirring", stirring_speed)
+        try:
+            value = int(stirring_speed)
+        except:
+            flash("please input an integer for stirring level")
+            return redirect(url_for("stirring"))
+        on_set("stirring", value, client)
 
         return redirect(url_for("stirring"))
     else:
         now = datetime.now()
         time_list = []
-        for time in range(7):
-            time_calculated = (now - timedelta(seconds=time*10))
+        for time in range(61):
+            time_calculated = now - timedelta(seconds=time * 10)
             time_list.append(time_calculated)
 
         data_points = []
-        for value in range(6):
-            time_mean = (Stirring.query.with_entities(func.avg(Stirring.stirring_speed)).filter(Stirring.timestamp <= time_list[value]).filter(Stirring.timestamp > time_list[value + 1]).scalar())
+        for value in range(60):
+            time_mean = (
+                Stirring.query.with_entities(func.avg(Stirring.stirring_speed))
+                .filter(Stirring.timestamp <= time_list[value])
+                .filter(Stirring.timestamp > time_list[value + 1])
+                .scalar()
+            )
             data_points.append(time_mean)
 
         date_value_list = generate_lists(time_list, data_points)
@@ -128,10 +148,9 @@ def temperature():
             try:
                 temperature_level = int(temperature_level)
             except:
-                #flash("please input an integer for temperature level")
+                flash("please input an integer for temperature level")
                 return redirect(url_for("temperature"))
-            #flash("temperature level successfully submitted")
-            on_set("temperature", temperature_level)
+            on_set("temperature", temperature_level, client)
         # add_temperature_level = Temperature(temperature_level, current_datetime)
         # db.session.add(add_temperature_level)
         # db.session.commit()
@@ -139,13 +158,18 @@ def temperature():
     else:
         now = datetime.now()
         time_list = []
-        for time in range(7):
-            time_calculated = (now - timedelta(seconds=time*10))
+        for time in range(61):
+            time_calculated = now - timedelta(seconds=time * 10)
             time_list.append(time_calculated)
 
         data_points = []
-        for value in range(6):
-            time_mean = (Temperature.query.with_entities(func.avg(Temperature.temperature_level)).filter(Temperature.timestamp <= time_list[value]).filter(Temperature.timestamp > time_list[value + 1]).scalar())
+        for value in range(60):
+            time_mean = (
+                Temperature.query.with_entities(func.avg(Temperature.temperature_level))
+                .filter(Temperature.timestamp <= time_list[value])
+                .filter(Temperature.timestamp > time_list[value + 1])
+                .scalar()
+            )
             data_points.append(time_mean)
 
         date_value_list = generate_lists(time_list, data_points)
@@ -162,27 +186,33 @@ def ph():
         try:
             ph_level = int(ph_level)
         except:
-            #flash("please input an integer for ph level")
+            flash("please input an integer for ph level")
             return redirect(url_for("ph"))
-        on_set("ph", ph_level)
-        #flash("ph level successfully submitted")
+        on_set("ph", ph_level, client)
+        # flash("ph level successfully submitted")
         return redirect(url_for("ph"))
     else:
         now = datetime.now()
         time_list = []
-        for time in range(7):
-            time_calculated = (now - timedelta(seconds=time*10))
+        for time in range(61):
+            time_calculated = now - timedelta(seconds=time * 10)
             time_list.append(time_calculated)
 
         data_points = []
-        for value in range(6):
-            time_mean = (PH.query.with_entities(func.avg(PH.ph_level)).filter(PH.timestamp <= time_list[value]).filter(PH.timestamp > time_list[value + 1]).scalar())
+        for value in range(60):
+            time_mean = (
+                PH.query.with_entities(func.avg(PH.ph_level))
+                .filter(PH.timestamp <= time_list[value])
+                .filter(PH.timestamp > time_list[value + 1])
+                .scalar()
+            )
             data_points.append(float(time_mean) if time_mean is not None else None)
 
         date_value_list = generate_lists(time_list, data_points)
         graphJSON = ph_graph(date_value_list)
         refresh_graphs()
         return render_template("ph.html", graphJSON=graphJSON)
+
 
 def generate_lists(time_list, data_points):
     date_value_list = []
@@ -195,25 +225,24 @@ def generate_lists(time_list, data_points):
     elif graph_type == "ph":
         query = PH.query.limit(100).all()
         value_attr = "ph_level"'''
-    for x in range (6):
+    for x in range(60):
         format_date_time = time_list[x].strftime("%Y-%m-%d %H:%M:%S")
         date_value_list.append([format_date_time, data_points[x]])
     print(date_value_list)
     return date_value_list
 
+
 def refresh_graphs():
     now = datetime.now()
-    one_day_ago = (now - timedelta(days=1))
-    ph_query = PH.query.filter(PH.timestamp<=one_day_ago)
+    one_day_ago = now - timedelta(days=1)
+    ph_query = PH.query.filter(PH.timestamp <= one_day_ago)
     for query in ph_query:
         db.session.delete(query)
         db.session.commit()
 
-
     # delete everything 24 hours ago
 
-    #if ph
-    
+    # if ph
 
     # last minute
     # calculate mean of data within 10 secs
@@ -230,7 +259,6 @@ def refresh_graphs():
     # for all data within 10 minutes - add up and divide by count
     # add data to graph
 
-
     # display graph based on time frame
 
 
@@ -245,6 +273,7 @@ if __name__ == "__main__":
                 "Temperature": Temperature,
                 "Stirring": Stirring,
                 "datetime": datetime,
+                "app": app,
             },
         )
     client.loop_start()
