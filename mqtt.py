@@ -88,11 +88,11 @@ def on_message(client, userdata, msg):
 
 def on_set(device_name: str, value: int, mqtt: Client):
     if device_name == "temp":
-        mqtt.publish("2025-engf0002/data/temp/action", f"{value}")
+        mqtt.publish("2025-engf0002/action/temp", f"{value}")
     if device_name == "ph":
-        mqtt.publish("2025-engf0002/data/ph/action", f"{value}")
+        mqtt.publish("2025-engf0002/action/ph", f"{value}")
     if device_name == "stirring":
-        mqtt.publish("2025-engf0002/data/stirring/action", f"{value}")
+        mqtt.publish("2025-engf0002/action/stirring", f"{value}")
 
 
 accumulator = None
